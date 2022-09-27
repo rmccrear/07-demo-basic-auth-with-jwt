@@ -38,7 +38,6 @@ describe('Testing the signin handler', () => {
         token: expect.any(String),
       })
     );
-    console.log(res.json);
   });
 
   test('Should trigger error handler when no user is present on the request', async () => {

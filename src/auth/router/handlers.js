@@ -31,12 +31,9 @@ async function handleSignin(req, res, next) {
 
 async function handleGetUsers(req, res, next) {
   try {
-    // const userRecords = await Users.findAll({});
-    // const list = userRecords.map((user) => user.username);
-    // username is unique. Specs unclear
-    // res.status(200).json(list);
-    const user = await Users.findOne({ where: { username: user.username } });
-    res.status(200).json([user]);
+    const userRecords = await Users.findAll({});
+    const list = userRecords.map((user) => user.username);
+    res.status(200).json(list);
   } catch (e) {
     console.error(e);
     next(e);
