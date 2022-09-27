@@ -6,7 +6,7 @@ const { db, Users } = require('../../../../../src/auth/models');
 const { handleSignin } = require('../../../../../src/auth/router/handlers.js');
 
 beforeAll(async () => {
-  await db.sync();
+  await db.sync({ force: true });
   await Users.create({ username: 'test', password: 'test' });
 });
 afterAll(async () => {
@@ -38,6 +38,7 @@ describe('Testing the signin handler', () => {
         token: expect.any(String),
       })
     );
+    console.log(res.json);
   });
 
   test('Should trigger error handler when no user is present on the request', async () => {
