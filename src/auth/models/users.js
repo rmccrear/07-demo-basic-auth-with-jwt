@@ -18,13 +18,13 @@ const userSchema = (sequelize, DataTypes) => {
   });
 
   model.beforeCreate(async (user) => {
-    let hashedPass = bcrypt.hash(user.password, 10);
+    let hashedPass = await bcrypt.hash(user.password, 10);
     user.password = hashedPass;
   });
 
   // Basic AUTH: Validating strings (username, password)
   model.authenticateBasic = async function (username, password) {
-    const user = await this.findOne({ username });
+    const user = await this.findOne({ where: { username } });
     const valid = await bcrypt.compare(password, user.password);
     if (valid) {
       return user;
