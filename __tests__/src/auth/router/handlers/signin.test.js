@@ -1,20 +1,19 @@
 'use strict';
 
-process.env.SECRET = "TEST_SECRET";
+process.env.SECRET = 'TEST_SECRET';
 
-const { db, users } = require('../../../../../src/auth/models');
+const { db, Users } = require('../../../../../src/auth/models');
 const { handleSignin } = require('../../../../../src/auth/router/handlers.js');
 
 beforeAll(async () => {
-  await db.sync();
-  await users.create({ username: 'test', password: 'test' });
+  await db.sync({ force: true });
+  await Users.create({ username: 'test', password: 'test' });
 });
 afterAll(async () => {
   await db.drop();
 });
 
 describe('Testing the signin handler', () => {
-
   const res = {
     send: jest.fn(() => res),
     status: jest.fn(() => res),
@@ -24,8 +23,8 @@ describe('Testing the signin handler', () => {
 
   test('Should find a User when a `user` is present on the request', async () => {
     let req = {
-      user: await users.findOne({ where: { username: 'test' } }),
-    }
+      user: await Users.findOne({ where: { username: 'test' } }),
+    };
 
     await handleSignin(req, res, next);
     expect(res.status).toHaveBeenCalledWith(200);
