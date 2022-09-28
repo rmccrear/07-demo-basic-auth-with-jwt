@@ -32,7 +32,10 @@ describe('testing the Signup Handler', () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        user: expect.any(Object),
+        user: expect.objectContaining({
+          _id: expect.any(Number),
+          username: expect.any(String),
+        }),
         token: expect.any(String),
       })
     );

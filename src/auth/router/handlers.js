@@ -4,9 +4,9 @@ const { Users } = require('../models/index.js');
 
 async function handleSignup(req, res, next) {
   try {
-    let userRecord = await Users.create(req.body); //?
+    let userRecord = await Users.create(req.body);
     const output = {
-      user: userRecord,
+      user: { _id: userRecord.id, username: userRecord.username },
       token: userRecord.token,
     };
     res.status(201).json(output);
